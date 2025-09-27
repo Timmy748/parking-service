@@ -1,0 +1,1 @@
+from utils.schemas.GenericMensageSchema import GenericMensageSchema

@@ -1,0 +1,45 @@
+services:
+
+  parking_service:
+    build: .
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      - parking_db
+      - rabbitmq
+  
+  worker:
+    build: .
+    command: celery -A core worker -l INFO
+    restart: always
+    depends_on:
+      - parking_db
+      - rabbitmq
+
+  parking_db:
+    image: postgres:15
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=parking_service
+  
+  rabbitmq:
+    image: rabbitmq:4.0-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+  
+volumes:
+  postgres_data:
+  rabbitmq_data:

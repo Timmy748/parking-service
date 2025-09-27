@@ -1,0 +1,1 @@
+from apps.parking.signals import update_parking_spot_status

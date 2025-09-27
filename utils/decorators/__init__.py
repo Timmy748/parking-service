@@ -1,0 +1,1 @@
+from .has_permissions import has_permissions_decorator

@@ -1,0 +1,4 @@
+venv
+db.sqlite
+.mypy_cache
+.ruff_cache

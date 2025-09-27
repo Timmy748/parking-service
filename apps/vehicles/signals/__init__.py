@@ -1,0 +1,1 @@
+from .complete_vehicle_data import complete_vehicle_data_post_save
