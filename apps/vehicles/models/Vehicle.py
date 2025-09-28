@@ -35,7 +35,7 @@ class OwnerQueryset(models.QuerySet["Vehicle"]):
 
         """
         if is_internal_user(user):
-            return self.all()
+            return self.select_related()
         return self.select_related().filter(owner=user)
 
 
